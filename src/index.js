@@ -1,12 +1,10 @@
 const http = require('node:http');
 const routes = require('./routes');
-const { URL } = require('node:url')
+const { URL, URLSearchParams } = require('node:url')
 
 const server = http.createServer((request, response) => {
     console.log(`Request method: ${request.method} | Endpoint: ${request.url}`);
 
-    // Create a URL reference to get endpoint and ID
-    // which assists with routing and handling requests resources
     const parsedURL = new URL(`http://localhost:3000${request.url}`);
 
     let { pathname } = parsedURL;
@@ -24,6 +22,7 @@ const server = http.createServer((request, response) => {
     ));
 
     if (route) {
+        request.params = Object.fromEntries(parsedURL.searchParams);
         route.handler(request, response);
     } else {
         response.writeHead(404, { 'Content-Type': 'text/html' });

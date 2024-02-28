@@ -13,8 +13,9 @@ const server = http.createServer((request, response) => {
     const splitEndpoint = pathname.split('/').filter(Boolean);
 
     if (splitEndpoint.length > 1) {
-        pathname = `/${splitEndpoint[0]}:id`;
+        pathname = `/${splitEndpoint[0]}/:id`;
         id = splitEndpoint[1];
+
     }
 
     const route = routes.find((route) => (
@@ -23,6 +24,9 @@ const server = http.createServer((request, response) => {
 
     if (route) {
         request.query = Object.fromEntries(parsedURL.searchParams);
+        request.params = { id };
+        console.log(route)
+
         route.handler(request, response);
     } else {
         response.writeHead(404, { 'Content-Type': 'text/html' });

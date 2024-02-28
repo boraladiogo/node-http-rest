@@ -18,11 +18,11 @@ const server = http.createServer((request, response) => {
     }
 
     const route = routes.find((route) => (
-        route.endpoint === request.url && route.method === request.method
+        route.endpoint === parsedURL.pathname && route.method === request.method
     ));
 
     if (route) {
-        request.params = Object.fromEntries(parsedURL.searchParams);
+        request.query = Object.fromEntries(parsedURL.searchParams);
         route.handler(request, response);
     } else {
         response.writeHead(404, { 'Content-Type': 'text/html' });

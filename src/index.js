@@ -19,13 +19,12 @@ const server = http.createServer((request, response) => {
     }
 
     const route = routes.find((route) => (
-        route.endpoint === parsedURL.pathname && route.method === request.method
+        route.endpoint === pathname && route.method === request.method
     ));
 
     if (route) {
         request.query = Object.fromEntries(parsedURL.searchParams);
         request.params = { id };
-        console.log(route)
 
         route.handler(request, response);
     } else {

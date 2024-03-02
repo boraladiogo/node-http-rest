@@ -20,5 +20,18 @@ module.exports = {
         const user = users.find((user) => user.id === Number(id));
 
         response.send(200, user);
+    },
+
+    create(request, response) {
+        let body = '';
+
+        request.on('data', (chunk) => {
+            body += chunk;
+        });
+
+        request.on('end', () => {
+            body = JSON.parse(body);
+            response.send(200, body);
+        });
     }
 }

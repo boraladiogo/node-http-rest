@@ -31,7 +31,19 @@ module.exports = {
 
         request.on('end', () => {
             body = JSON.parse(body);
-            response.send(200, body);
+
+            const lastUserId = users.length + 1;
+            const newUser = {
+                id: lastUserId,
+                ...body
+            }
+            
+            users.push(newUser);
+
+            response.send(200, newUser);
         });
+
+
+
     }
 }

@@ -37,7 +37,7 @@ module.exports = {
 
     update(request, response) {
         const { body } = request;
-        const { id } = request.params
+        const { id } = request.params;
 
         users = users.map((user) => {
             if (user.id === Number(id)) {
@@ -51,5 +51,13 @@ module.exports = {
         });
 
         response.send(200, {id: Number(id), ...body});
+    },
+
+    delete(request, response) {
+        const { id } = request.params;
+
+        users = users.filter((user) => user.id !== Number(id))
+
+        response.send(200);
     }
 }

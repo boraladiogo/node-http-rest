@@ -1,4 +1,4 @@
-const users = require("../mocks/users");
+let users = require("../mocks/users");
 
 module.exports = {
     list(request, response) {
@@ -23,24 +23,15 @@ module.exports = {
     },
 
     create(request, response) {
-        let body = '';
-
-        request.on('data', (chunk) => {
-            body += chunk;
-        });
-
-        request.on('end', () => {
-            body = JSON.parse(body);
-
-            const lastUserId = users.length + 1;
-            const newUser = {
-                id: lastUserId,
-                ...body
-            }
+        const { body } = request;
+        const lastUserId = users.length + 1;
+        const newUser = {
+            id: lastUserId,
+            ...body,
+        }
             
-            users.push(newUser);
+        users.push(newUser);
 
-            response.send(200, newUser);
-        });
+        response.send(200, newUser);
     }
 }

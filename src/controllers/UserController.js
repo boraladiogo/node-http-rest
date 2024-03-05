@@ -42,8 +42,5 @@ module.exports = {
 
             response.send(200, newUser);
         });
-
-
-
     }
 }
